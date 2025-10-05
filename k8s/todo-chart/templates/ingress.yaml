@@ -1,0 +1,27 @@
+{{- if .Values.ingress.enabled }}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ include "todo.fullname" . }}-ingress
+  annotations:
+{{ toYaml .Values.ingress.annotations | indent 4 }}
+spec:
+  rules:
+    - host: {{ .Values.ingress.host }}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ include "todo.fullname" . }}-frontend
+                port:
+                  number: {{ .Values.service.frontend.port | default 80 }}
+          - path: /api
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ include "todo.fullname" . }}-backend
+                port:
+                  number: {{ .Values.service.backend.port }}
+{{- end }}

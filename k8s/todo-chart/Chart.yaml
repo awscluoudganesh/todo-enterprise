@@ -1,0 +1,11 @@
+apiVersion: v2
+name: todo-chart
+description: Todo App (backend + frontend + postgres) Helm chart
+type: application
+version: 0.1.0
+appVersion: "1.0.0"
+keywords:
+  - todo
+  - spring
+  - react
+  - postgres

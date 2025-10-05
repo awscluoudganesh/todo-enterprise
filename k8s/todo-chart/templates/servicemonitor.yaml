@@ -1,0 +1,17 @@
+{{- if .Values.prometheus.serviceMonitor.enabled }}
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: {{ include "todo.fullname" . }}-backend-sm
+  labels:
+    release: prometheus
+spec:
+  selector:
+    matchLabels:
+      app: {{ include "todo.fullname" . }}-backend
+  endpoints:
+    - port: http
+      path: {{ .Values.prometheus.serviceMonitor.path }}
+      interval: {{ .Values.prometheus.serviceMonitor.interval }}
+      honorLabels: true
+{{- end }}
